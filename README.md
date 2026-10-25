@@ -1,22 +1,35 @@
 # Codex Send Queue
 
-Claude Code plugin that gives the composer two explicit send modes. In the `Chat` context, `Tab` submits with `chat:queueSubmit`, so a prompt waits behind the active turn. `Enter` submits with `chat:sendNow`, so it uses the immediate-send action while preserving the current prompt text.
+Claude Code plugin that keeps follow-up prompts out of the running turn and submits them as separate turns after the current turn completes.
 
 ## Installation
 
-At a Claude Code prompt, install the plugin with:
+At a Claude Code prompt:
 
 ```text
 /plugin install codex-send-queue --marketplace YMRwithNoworry/codex-send-queue
 ```
 
-For local development, load the plugin directly with `claude --plugin-dir <path>`.
+For local development, use `claude --plugin-dir <path>`.
 
-The keybinding file is installed separately at `~/.claude/keybindings.json`. Existing bindings should be preserved when merging the two `Chat` entries.
+The keybindings are configured separately in `~/.claude/keybindings.json`. Merge these actions into the existing `Chat` bindings:
 
-## Shortcuts
+```json
+{
+  "context": "Chat",
+  "bindings": {
+    "tab": "chat:queueSubmit",
+    "enter": "chat:sendNow"
+  }
+}
+```
 
-- `Tab`: queue the current prompt until the active turn finishes.
-- `Enter`: send the current prompt immediately.
+## Behavior
 
-The plugin draws a small reminder above the prompt. The actual key behavior is provided by Claude Code's keybinding actions in `~/.claude/keybindings.json`.
+- `Tab`: while a turn is running, hold the text in the plugin queue and submit it only after the current turn completes.
+- `Enter`: keep Claude Code's native `chat:sendNow` behavior for an intentional immediate send. This may interrupt current work.
+- `Ctrl+X Enter`: the native `chat:queueSubmit` action is also captured by the strict queue.
+- Queued messages are submitted one at a time as separate user turns, in order. The queue is scoped to the current session.
+- The strict queue currently supports text-only messages. If a prompt contains attachments, the plugin rejects it with a notice instead of silently sending it into the active turn.
+
+The plugin draws a reminder and queue count above the prompt. If sending a queued message is rejected, it remains queued and can be retried with the `Continue queue` button.
