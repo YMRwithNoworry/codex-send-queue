@@ -252,12 +252,7 @@ export const register: Register = on => {
             )
           }
 
-          const attachmentNames = item.attachments?.map(
-            attachment => attachment.filename ?? attachment.mediaType ?? attachment.type,
-          ) ?? []
-          const label = [item.text.replace(/\s+/g, ' ').trim(), ...attachmentNames.map(name => `📎 ${name}`)]
-            .filter(Boolean)
-            .join(' ') || '（仅附件）'
+          const label = item.text.replace(/\s+/g, ' ').trim() || '（空消息）'
           const preview = label.length > previewWidth
             ? `${label.slice(0, previewWidth - 1)}…`
             : label
