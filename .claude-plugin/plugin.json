@@ -1,6 +1,6 @@
 {
   "name": "codex-send-queue",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Adds strict, turn-complete queued and immediate prompt submission helpers to Claude Code.",
   "author": {
     "name": "YMRwithNoworry"

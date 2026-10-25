@@ -12,21 +12,32 @@ At a Claude Code prompt:
 
 For local development, use `claude --plugin-dir <path>`.
 
-The keybindings are configured separately in `~/.claude/keybindings.json`. Merge these actions into the existing `Chat` bindings:
+The keybindings are configured separately in `~/.claude/keybindings.json`. Preserve existing bindings and add these contexts:
 
 ```json
 {
-  "context": "Chat",
-  "bindings": {
-    "tab": "chat:queueSubmit",
-    "enter": "chat:sendNow"
-  }
+  "bindings": [
+    {
+      "context": "Chat",
+      "bindings": {
+        "tab": "chat:queueSubmit",
+        "enter": "chat:sendNow"
+      }
+    },
+    {
+      "context": "Autocomplete",
+      "bindings": {
+        "tab": "autocomplete:accept"
+      }
+    }
+  ]
 }
 ```
 
 ## Behavior
 
 - `Tab`: while a turn is running, hold the text in the plugin queue and submit it only after the current turn completes.
+- `Tab` while the autocomplete menu is open: accept the highlighted completion instead of submitting or queuing the prompt.
 - `Enter`: keep Claude Code's native `chat:sendNow` behavior for an intentional immediate send. This may interrupt current work.
 - `Ctrl+X Enter`: the native `chat:queueSubmit` action is also captured by the strict queue.
 - Queued messages are submitted one at a time as separate user turns, in order. The queue is scoped to the current session.
