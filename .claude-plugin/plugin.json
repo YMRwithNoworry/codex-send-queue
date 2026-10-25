@@ -1,0 +1,8 @@
+{
+  "name": "codex-send-queue",
+  "version": "0.1.0",
+  "description": "Adds Codex-style queued and immediate prompt submission helpers to Claude Code.",
+  "author": {
+    "name": "YMRwithNoworry"
+  }
+}

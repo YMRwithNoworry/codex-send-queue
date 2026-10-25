@@ -1,0 +1,13 @@
+{
+  "name": "codex-send-queue-marketplace",
+  "owner": {
+    "name": "YMRwithNoworry"
+  },
+  "description": "A Claude Code plugin for queued and immediate prompt submission.",
+  "plugins": [
+    {
+      "name": "codex-send-queue",
+      "source": "./"
+    }
+  ]
+}
