@@ -36,7 +36,8 @@ The keybindings are configured separately in `~/.claude/keybindings.json`. Prese
 
 ## Behavior
 
-- `Tab`: while a turn is running, hold the text in the plugin queue and submit it only after the current turn completes.
+- `Tab`: while a turn is running, move the prompt into the queue, clear it from the composer, and send it only after the current turn completes. Image and document attachments are rejected with a notice because Claude Code's plugin API does not provide a way to persist a user's attachment and attach its bytes to a later plugin-submitted turn.
+- Queued messages appear left-aligned above the composer, in the lower part of the chat. Each row has `立刻发送` (move it to the front and stop the active turn when possible), `编辑` (edit inline and save), and `删除` controls.
 - `Tab` while the autocomplete menu is open: accept the highlighted completion instead of submitting or queuing the prompt.
 - `Enter`: keep Claude Code's native `chat:sendNow` behavior for an intentional immediate send. This may interrupt current work.
 - `Ctrl+X Enter`: the native `chat:queueSubmit` action is also captured by the strict queue.
